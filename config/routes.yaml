@@ -1,3 +1,7 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+weather_in_city:
+    path: /weather/{countryCode}/{city}
+    controller: App\Controller\WeatherController:cityAction
+    
+#app_logout:
+#    path: /logout
+#    methods: GET

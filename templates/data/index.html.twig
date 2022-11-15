@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Data index{% endblock %}
+
+{% block body %}
+    <h1>Data index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Wind</th>
+                <th>Clouds</th>
+                <th>Humidity</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in data %}
+            <tr>
+                <td>{{ data.id }}</td>
+                <td>{{ data.date ? data.date|date('Y-m-d') : '' }}</td>
+                <td>{{ data.temperature }}</td>
+                <td>{{ data.wind }}</td>
+                <td>{{ data.clouds }}</td>
+                <td>{{ data.humidity }}</td>
+                <td>
+                    {% if is_granted('ROLE_DATA_SHOW') %}
+                    <a href="{{ path('app_data_show', {'id': data.id}) }}">show</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_DATA_EDIT') %}
+                    <a href="{{ path('app_data_edit', {'id': data.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_DATA_NEW') %}
+    <a href="{{ path('app_data_new') }}">Create new</a>
+    {% endif %}
+<a href="http://pogodynka.localhost:2137/city/">Widok city </a>
+{% endblock %}
